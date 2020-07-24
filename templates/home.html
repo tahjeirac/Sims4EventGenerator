@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}"/>
+    <meta charset="UTF-8">
+    {% if title %}
+        <title>{{ title }} - </title>
+    {% else %}
+        <title>Random Sims 4 event generator</title>
+    {% endif %}
+</head>
+<body>
+<H1> Sims 4 Random Event Generator </H1>
+
+<div>
+    <p > Welcome to my sims 4 event generator, press the button below to generate an event</p>
+</div>
+
+<div>
+    <!-- check box for deaths -->
+    <form>
+  <input type="checkbox" id="deaths" name="deaths2" value="deaths"  checked='checked'>
+  <label for="true">Deaths Included?</label><br>
+
+</form>
+</div>
+        {% block content %}{% endblock %}
+
+<div>
+    <!--Generate Button -->
+<form action="/generate">
+    <button type = "submit" class = "myButton" onclick = "checkCheckBox()" >Generate New Event</button>
+    <!-- to store js var in -->
+    <input type="hidden" name="deaths" id = "deaths" value="">
+
+</form>
+</div>
+
+<script type=text/javascript src="{{
+  url_for('static', filename='JS/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{% extends "home.html" %}
+
+{% block content %}
+    <body>
+    <div class="flexcolumn">
+        <div class="flexrow">
+            <p class="label"> Event</p>
+            {% if event %}
+                <p class="event"> {{ event }}  </p>
+            {% endif %}
+        </div>
+
+        <div class="flexrow">
+            <p class="label"> Description</p>
+            {% if description %}
+                <p class="event"> {{ description }}  </p>
+            {% endif %}
+        </div>
+
+        <div class="flexrow">
+            <p class="label"> Category</p>
+            {% if category %}
+                <p class="event"> {{ category }}  </p>
+            {% endif %}
+        </div>
+    </div>
+    </body>
+    </html>
+{% endblock %}

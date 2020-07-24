@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Major+Mono+Display|Courgette');
+
+body {
+    background-color: linen;
+}
+
+h1 {
+    color: maroon;
+    margin-left: 40px;
+    font-family: 'Courgette';
+
+}
+
+p.event {
+    color: orange;
+}
+
+p.label, label {
+    color: darkblue;
+    margin: 10px;
+    font-weight: bold;
+
+}
+
+button {
+    color: white;
+    border: 2px solid #0b4125;
+}
+
+button.myButton {
+    width: 50%;
+    line-height: 1em;
+    padding: 0px;
+    background: #3cdd8a;
+    font-size: 20px;
+    border-radius: 13px;
+    font-family: Georgia, serif;
+    font-weight: normal;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+}
+
+button.myButton:hover {
+    background: #21b96b;
+}
+
+/*selectd */
+button.myButton:active {
+    background: #144E75;
+}
+
+.flexrow{
+    display: flex;
+    flex-direction: row;
+}
+
+.flexcolumn{
+    display: flex;
+    flex-direction: column;
+}
