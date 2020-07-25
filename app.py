@@ -1,5 +1,5 @@
 import sqlite3
-#TODO: Fix apperance, add more filtering option (by pack, category), make it so page does not onstantly refresh and reset chosen checks
+#TODO: Fix apperance, add more filtering option (by pack, category), figure out ajax and jquery for sending js dictonary
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
