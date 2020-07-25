@@ -10,7 +10,7 @@
         <title>Random Sims 4 event generator</title>
     {% endif %}
 </head>
-<body>
+<body onload="load()">
 <H1> Sims 4 Random Event Generator </H1>
 
 <div>
@@ -20,19 +20,21 @@
 <div>
     <!-- check box for deaths -->
     <form>
-  <input type="checkbox" id="deaths" name="deaths2" value="deaths"  checked='checked'>
-  <label for="true">Deaths Included?</label><br>
+  <input type="checkbox" id="deaths" name="deaths2" value="deaths" >
+  <label for="deaths">Deaths Included?</label><br>
 
+      <input type="checkbox" id="basegame" name="basegameonly" value="basegame">
+  <label for="basegame">basegame?</label><br>
 </form>
 </div>
         {% block content %}{% endblock %}
 
 <div>
     <!--Generate Button -->
-<form action="/generate">
-    <button type = "submit" class = "myButton" onclick = "checkCheckBox()" >Generate New Event</button>
+<form action = "/generate">
+    <button type = "submit" class = "myButton" onclick = "checkCheckBox()" value = "test" name="product" formmethod="get|post">Generate New Event</button>
     <!-- to store js var in -->
-    <input type="hidden" name="deaths" id = "deaths" value="">
+    <input type="hidden" name="deathStorage" id = "deathStorage" value="">
 
 </form>
 </div>

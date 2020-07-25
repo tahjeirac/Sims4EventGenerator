@@ -15,7 +15,7 @@ def dict_factory(cursor, row):
     return d
 
 
-@app.route('/')
+@app.route('/', methods=('GET', 'POST'))
 def hello_world():
    return render_template('home.html')
 
@@ -24,7 +24,7 @@ def generate_event():
     conn = sqlite3.connect('events.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
-    deathIncluded = str((request.args.get('deaths')))
+    deathIncluded = str((request.args.get('deathStorage')))
 
 
     with conn:
