@@ -3,56 +3,43 @@
 <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}"/>
     <meta charset="UTF-8">
-    {% if title %}
-        <title>{{ title }} - </title>
-    {% else %}
-        <title>Random Sims 4 event generator</title>
-    {% endif %}
+    <title>Random Sims 4 event generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+
 </head>
+
+
 <body onload="load()">
-<H1> Sims 4 Random Event Generator </H1>
+<div class="container-fluid container">
+    <H1>S I M S 4 Random Event Generator </H1>
 
-<div>
-    <p> Welcome to my sims 4 event generator, press the button below to generate an event</p>
-</div>
+    <H3> Welcome to my sims 4 event generator, press the button below to generate an event</H3>
 
-<div>
-    <!-- checkboxes -->
-    <form action="/">
-        <input type="checkbox" id="deaths" name="deaths" value="deaths">
-        <label for="deaths">Deaths Included?</label><br>
+    {% include 'displayEvents.html' %}
 
-        <input type="checkbox" title="select this to only have basegame" id="basegame" name="packsIncluded[]"
-               value="basegame" onclick="setBasegameOnlyState(this)">
-        <label for="basegame">Basegame Only</label><br>
+    {% include 'settings.html' %}
 
-        <input type="checkbox" class="checkBox" name="packsIncluded[]" id="Pets" value="Pets"
-               onclick="setBasegameOnlyState(this)">
-        <label for="Pets">Pets</label>
-
-        <input type="checkbox" class="checkBox" name="packsIncluded[]" id="GetToWork" value="Get To Work"
-               onclick="setBasegameOnlyState(this)">
-        <label for="GetToWork">Get to Work</label>
-
-        <button type="submit" class="myButton" onclick="save()" value="saveChoices" name="saveChoices"
-                formmethod="get|post">Save Settings
-        </button>
-    </form>
-</div>
-
-{% block content %}{% endblock %}
-
-<div>
     <!--Generate Button -->
     <form action="/generate">
-        <button type="submit" class="myButton" onclick="checkCheckBox()" value="generateEvents" name="generateEvents"
-                formmethod="get|post">Generate New Event
-        </button>
-        <!-- to store js var in -->
-        <input type="hidden" name="deathStorage" id="deathStorage" value="">
+        <button type="submit" class="button" onclick="sendChoices()" value="generateEvents"
+                name="generateEvents"
+                formmethod="get|post">Generate New Event </button>
+
 
     </form>
+
+{#    ajax#}
+{#    <button type = "submit" class="button" onclick="sendChoices()" value="generateEvents"#}
+{#                name="generateEvents"> NEW EVENT</button>#}
+
+
 </div>
+
 
 <script type=text/javascript src="{{ url_for('static', filename='JS/main.js') }}"></script>
 </body>

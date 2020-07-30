@@ -1,20 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Major+Mono+Display|Courgette');
 
-body {
-    background-color: linen;
-}
 
 h1 {
-    color: maroon;
-    margin-left: 40px;
-    font-family: 'Courgette';
+	display: inline;
+	position: relative;
+	font: 200px Courgette;
+	letter-spacing: -5px;
+	color: rgba(0,0,255,0.5);
 
 }
 
+h1:after {
+	content: "S I M S  4";
+	position: absolute; left: 10px; top: 5px;
+	color: rgba(255,0,0,0.5);
+}
 p.event {
     color: orange;
 }
+
 
 p.label, label {
     color: darkblue;
@@ -23,40 +28,32 @@ p.label, label {
 
 }
 
-button {
-    color: white;
-    border: 2px solid #0b4125;
-}
 
-button.myButton {
+
+myButton {
+    background-color: #4caf50;
     width: 50%;
     line-height: 1em;
-    padding: 0px;
-    background: #3cdd8a;
-    font-size: 20px;
     border-radius: 13px;
     font-family: Georgia, serif;
     font-weight: normal;
     text-decoration: none;
     font-style: normal;
     font-variant: normal;
+      border: none;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
 }
 
-button.myButton:hover {
+myButton:hover {
     background: #21b96b;
 }
 
-/*selectd */
-button.myButton:active {
-    background: #144E75;
-}
-
-.flexrow{
-    display: flex;
-    flex-direction: row;
-}
-
-.flexcolumn{
-    display: flex;
-    flex-direction: column;
+.button-block {
+    display: block;
+    width: 35%;
 }
