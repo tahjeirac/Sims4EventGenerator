@@ -8,29 +8,17 @@ function save(array) {
                 localStorage.setItem(checkBox.id, checkBox.checked);
 
     })
-
-
-
-    //  packCheckBoxes.forEach(function (checkBox) {
-    //      localStorage.setItem(checkBox.id, checkBox.checked);
-    //  });
 }
 
 //make sure at least one category is checked
 function checkCategories() {
-    var pack = isChecked(packCheckBoxes);
-    if (pack) {
-        save(packCheckBoxes)
-        var category = isChecked(categoryCheckBoxes);
-        if (category) {
+    let category = isChecked(categoryCheckBoxes);
+    if (category) {
             save(categoryCheckBoxes);
+            return true
         } else {
-            alert("please select a category")
+            alert("Please select one or more categories")
         }
-    } else {
-        alert("please select a pack")
-    }
-
 }
 
 function isChecked(array) {
@@ -42,7 +30,7 @@ function isChecked(array) {
     })
 
     //all unchecked
-    if (notChecked == categoryCheckBoxes.length) {
+    if (notChecked == array.length) {
         //alert("you must select a category");
         return false;
     } else {
@@ -53,25 +41,10 @@ function isChecked(array) {
 
 //load whether checkboxes where checked or unchecked
 function load() {
-
     [].forEach.call(checkBoxes, function (checkBox) {
         let checked = JSON.parse(localStorage.getItem(checkBox.id));
         document.getElementById(checkBox.id).checked = checked;
     });
-}
-
-//if basegame only checked uncheck other packs and vice-versa
-function setBasegameOnlyState(element) {
-    if ((element.id != "basegame") && (element.checked)) {
-        document.getElementById('basegame').checked = false;
-    } else if (element.id == "basegame" && element.checked) {
-        packCheckBoxes.forEach(function (checkBox) {
-            //don't uncheck basegame
-            if (checkBox.id != "basegame") {
-                document.getElementById(checkBox.id).checked = false;
-            }
-        })
-    }
 }
 
 
@@ -86,22 +59,22 @@ function createDictonary() {
 
 function sendChoices() {
     let dict = createDictonary();
-    json_dict = JSON.stringify(dict);
+    let json_dict = JSON.stringify(dict);
     //might need to add more in body + error handling
     $.post("/selection", {
         javascript_data: json_dict
     });
+}
 
-    $.get("/generate");
-    // $.ajax({
-    //         type: 'POST',
-    //         url: "img/test.py",
-    //         success: function () {
-    //             alert("working")
-    //         },
-    //         error: function () {
-    //             alert("Not Working")
-    //         }
-    //     });
+
+function generate() {
+    save(packCheckBoxes)
+    let saved = checkCategories();
+    let deathIncluded = document.getElementById('deaths')
+    if (saved){
+        localStorage.setItem(deathIncluded.id, deathIncluded.checked);
+        sendChoices();
+        location.assign('/generate')
+    }
 }
 
