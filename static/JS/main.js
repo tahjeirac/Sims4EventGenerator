@@ -21,6 +21,19 @@ function checkCategories() {
         }
 }
 
+function checkAll(id) {
+    if (id == "allCategories") {
+        categoryCheckBoxes.forEach(function (checkbox) {
+            checkbox.checked = true;
+        })
+    }
+
+    else if (id == "allPacks") {
+        packCheckBoxes.forEach(function (checkbox) {
+            checkbox.checked = true;
+        })
+    }
+}
 function isChecked(array) {
     let notChecked = 0
     array.forEach(function (checkBox) {
