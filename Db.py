@@ -1,7 +1,6 @@
 import sqlite3
 
 
-
 def dict_factory(cursor, row):
     d = {}
     # ennumerate has built in counter
@@ -10,12 +9,10 @@ def dict_factory(cursor, row):
     return d
 
 
-#Repeating for some reason??? if print out filters does twice
 def choose_event (filters):
     conn = sqlite3.connect('events.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
-    print(filters)
     deathIncluded = filters['deaths']
     ##add in error handling for if none exist
     packs = ["Basegame"]
@@ -33,15 +30,32 @@ def choose_event (filters):
             if (filters[key] == True):
                 packs.append(key)
 
-    if (deathIncluded == True):
+    if deathIncluded:
         death.append('1')
+    print(death)
 
     #might not need with conn, close connection??
     with conn:
         ##make formatting cleaner
         cur.execute('''SELECT * FROM Sims4Events WHERE packsNeeded IN ({}) 
                         AND eventType IN ({}) AND deadly IN ({}) '''
-                    .format((', '.join(['?'] * len(packs))),(', '.join(['?'] * len(death))), (', '.join(['?'] * len(type)))), [*packs, *type, *death])
+                    .format((', '.join(['?'] * len(packs))),(', '.join(['?'] * len(type))), (', '.join(['?'] * len(death)))), [*packs, *type, *death])
         chosen_events = cur.fetchall()
 
     return chosen_events
+
+def add_suggestion(suggestion):
+    #automatically commits or rolls back (if eexception) connections
+    conn = sqlite3.connect('events.db')
+    conn.row_factory = dict_factory
+    cur = conn.cursor()
+    death = suggestion['death']
+    roll = suggestion['roll']
+    description = suggestion['description']
+    eventName = suggestion['eventName']
+    category = suggestion['category']
+
+    with conn:
+        cur.execute("INSERT INTO suggestions VALUES (:eventName,:description, :category, :deadly,:rollNeeded)",
+                    {'eventName': eventName,'description':description, 'category': category,
+                     'deadly': death, 'rollNeeded': roll})

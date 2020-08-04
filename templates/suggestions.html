@@ -1,0 +1,59 @@
+<form action="/" method="post" onsubmit="sendSuggestion()">
+    {#    fix alert for succesful submission#}
+    <div class="flexRow">
+        <div>
+            <input type="checkbox" class="checkBox" id="s_deaths">
+            <label for="s_deaths">Deaths Included?</label><br>
+        </div>
+
+        <div>
+            <input type="checkbox" class="checkBox" id="s_roll">
+            <label for="s_roll">Dice Roll Needed?</label><br>
+        </div>
+    </div>
+
+    <input type="text" id="s_eventName" required>
+    <label for="s_eventName">Event Name?</label><br>
+
+    <div class="break"></div>
+
+    <textarea id="s_description" required></textarea>
+    <label for="s_description">Description of event</label>
+
+    <div class="break"></div>
+    <h2>Category</h2>
+    <div class="break"></div>
+
+
+    <div class="flexRow">
+        <div>
+            <input type="radio" class="checkBox" name="categories" id="s_Household Events"
+                   required>
+            <label for="s_Household Events">Household Events</label>
+        </div>
+
+        <div>
+            <input type="radio" class="checkBox" name="categories" id="s_Career">
+            <label for="s_Career">Careers</label>
+        </div>
+
+        <div>
+            <input type="radio" class="checkBox" name="categories" id="s_Financial">
+            <label for="s_Financial">Financial</label>
+        </div>
+
+        <div>
+            <input type="radio" class="checkBox" name="categories" id="s_Disaster">
+            <label for="s_Disaster">Disaster</label>
+        </div>
+
+        <div>
+            <input type="radio" class="checkBox" name="categories" id="s_Illness">
+            <label for="s_Illness">Illness</label>
+        </div>
+    </div>
+    <div class="success" id="suggestSuccess">Success!</div>
+    <div class="failure" id="suggestFailure">Something went wrong</div>
+
+    <input type="submit" class="btn">
+</form>

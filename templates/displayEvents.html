@@ -1,34 +1,18 @@
-    <div class="row">
-                <div class="col-sm-4">
-        <p class="label"> Event</p>
-                </div>
-    <div class = "col-sm-8">
-        {% if event %}
-            <p class="event"> {{ event }}  </p>
+<div>
+    {% if event %}
+        <H4 id="eventText"> {{ event }} : </H4>
+    {% endif %}
+
+    {% if description %}
+        <p class="description"> {{ description }}  </p>
+    {% endif %}
+    <div class="flexRow">
+        {% if category %}
+            <p class="label"> Category: </p>
+
+            <p class="description"> {{ category }}  </p>
         {% endif %}
-    </div>
+
     </div>
 
-    <div class="row">
-            <div class="col-sm-4">
-        <p class="label"> Description</p>
-
-            </div>
-            <div class="col-sm-4">
-
-        {% if description %}
-            <p class="event"> {{ description }}  </p>
-        {% endif %}
-    </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-4">
-            <p class="label"> Category</p>
-        </div>
-        <div class="col-sm-8">
-            {% if category %}
-                <p class="event"> {{ category }}  </p>
-            {% endif %}
-        </div>
-    </div>
+</div>

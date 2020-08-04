@@ -1,51 +1,79 @@
-<button class="button-block myButton" data-toggle="collapse" data-parent="#accordion" href="#collapse1">Settings
-</button>
-<div id="collapse1" class="panel-collapse collapse in">
-    <div class="panel-body">
-            <div class="row">
-                <input type="checkbox" class="checkBox" id="deaths" name="deaths" value="deaths">
-                <label for="deaths">Deaths Included?</label><br>
+{#<button type="button" class="collapsible">Settings#}
+{#    <button type="button" class="collapsible" ><i class="fas fa-cog"></i>#}
+{#</button>#}
+{#<div class="content container checkBoxContainer">#}
+<div>
+    <input type="checkbox" class="checkBox" id="deaths" name="deaths" value="deaths">
+    <label for="deaths">Deaths Included?</label><br>
+</div>
+<div class="container  checkBoxContainer">
 
-                <h2>Packs Included</h2>
-                <button class="button" id = "allPacks" onclick="checkAll(id);">All </button>
+    <h2>Packs Included</h2>
 
-                <input type="checkbox" class="checkBox" name="packsIncluded[]" id="Pets" value="Pets">
-                <label for="Pets">Pets</label>
+    <div class="break"></div>
 
-                <input type="checkbox" class="checkBox" name="packsIncluded[]" id="Get To Work"
-                       value="Get To Work">
-                <label for="Get To Work">Get to Work</label>
-
-                <input type="checkbox" class="checkBox" name="packsIncluded[]" id="University"
-                       value="University">
-                <label for="University">University</label>
-
-                <input type="checkbox" class="checkBox" name="packsIncluded[]" id="Strangerville"
-                       value="Strangerville">
-                <label for="Strangerville">Strangerville</label>
-
-                <h2>Categories </h2>
-                <input type="checkbox" class="checkBox" name="categoriesIncluded[]" id="Household Events"
-                       value="Household Events">
-                <label for="Household Events">Household Events</label>
-
-                <input type="checkbox" class="checkBox" name="categoriesIncluded[]" id="Career" value="Career">
-                <label for="Career">Careers</label>
-
-                <input type="checkbox" class="checkBox" name="categoriesIncluded[]" id="Financial" value="Financial">
-                <label for="Financial">Financial</label>
-
-                <input type="checkbox" class="checkBox" name="categoriesIncluded[]" id="Disaster" value="Disaster">
-                <label for="Disaster">Disaster</label>
-
-                <input type="checkbox" class="checkBox" name="categoriesIncluded[]" id="Illness" value="Illness">
-                <label for="Illness">Illness</label>
-
-                 <button class="button" id = "allCategories" onclick="checkAll(id);">All </button>
-
-
-
-            </div>
+    <div>
+        <input type="checkbox" class="checkBox" name="packsIncluded[]" id="Pets" value="Pets">
+        <label for="Pets">Pets</label>
     </div>
+
+    <div>
+        <input type="checkbox" class="checkBox" name="packsIncluded[]" id="Get To Work"
+               value="Get To Work">
+        <label for="Get To Work">Get to Work</label>
+    </div>
+
+
+    <div>
+        <input type="checkbox" class="checkBox" name="packsIncluded[]" id="University"
+               value="University">
+        <label for="University">University</label>
+    </div>
+
+    <div>
+        <input type="checkbox" class="checkBox" name="packsIncluded[]" id="Strangerville"
+               value="Strangerville">
+        <label for="Strangerville">Strangerville</label>
+    </div>
+
+
+    <div class="break"></div>
+    <button class="btn allBtn" id="allPacks" onclick="checkAll(id);">All</button>
+    <div class="break"></div>
+
+
+    <h2>Categories </h2>
+    <div class="break"></div>
+
+    <div>
+        <input type="checkbox" class="checkBox" name="categoriesIncluded[]" id="Household Events"
+               value="Household Events">
+        <label for="Household Events">Household Events</label>
+    </div>
+
+    <div>
+        <input type="checkbox" class="checkBox" name="categoriesIncluded[]" id="Career" value="Career">
+        <label for="Career">Careers</label>
+    </div>
+
+    <div>
+        <input type="checkbox" class="checkBox" name="categoriesIncluded[]" id="Financial" value="Financial">
+        <label for="Financial">Financial</label>
+    </div>
+
+    <div>
+        <input type="checkbox" class="checkBox" name="categoriesIncluded[]" id="Disaster" value="Disaster">
+        <label for="Disaster">Disaster</label>
+    </div>
+
+    <div>
+        <input type="checkbox" class="checkBox" name="categoriesIncluded[]" id="Illness" value="Illness">
+        <label for="Illness">Illness</label>
+    </div>
+
+    <div class="break"></div>
+
+    <button class="btn allBtn" id="allCategories" onclick="checkAll(id);">All</button>
 </div>
 
+{#</div>#}

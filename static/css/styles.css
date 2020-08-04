@@ -1,59 +1,296 @@
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Major+Mono+Display|Courgette');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,500;1,600&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Proza+Libre:wght@400;500;600;700;800&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap');
 
 
-h1 {
-	display: inline;
-	position: relative;
-	font: 200px Courgette;
-	letter-spacing: -5px;
-	color: rgba(0,0,255,0.5);
+body, html {
+background: #edf8fc;
+    font-size: 20px;
+    /*height: 100%;*/
+}
+
+#titleHeader {
+    background-image: url("sims_background.png");
+    text-align: center;
+}
+
+h1, h4 {
+    font-family: 'Libre Baskerville', serif;
+}
+
+
+
+p {
+font-family: 'Roboto Slab', serif;
+    font-weight: 400;
+}
+
+/* headlines with lines https://stackoverflow.com/questions/15557627/heading-with-horizontal-line-on-either-side */
+.decorated {
+    overflow: hidden;
+    text-align: center;
+}
+
+.decorated > span {
+    position: relative;
+    display: inline-block;
+}
+
+.decorated > span:before, .decorated > span:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    border-bottom: 2px solid;
+    width: 592px; /* half of limiter */
+    margin: 0 10px;
+}
+
+.decorated > span:before {
+    right: 100%;
+}
+
+.decorated > span:after {
+    left: 100%;
+}
+
+.fancyText {
+    color: black;
+    display: block;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.85em;
+    font-weight: 400;
+    position: relative;
+    text-align: center;
+}
+
+#simsText {
+    letter-spacing: 0.15em;
+}
+
+#settingsBtn {
+    position: absolute;
+    right: 92px;
+    top: 160px;
+}
+
+
+#suggestBtn {
+    position: absolute;
+    right: 20px;
+    top: 160px;
+}
+
+
+
+
+/* change alert box */
+.container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    position: relative;
+}
+
+.checkBoxContainer {
+    justify-content: space-evenly;
+}
+
+.events {
+    flex: 6 0 0;
+    justify-content: center;
+}
+
+.settings {
+    flex: 1 0 0;
+
 
 }
 
-h1:after {
-	content: "S I M S  4";
-	position: absolute; left: 10px; top: 5px;
-	color: rgba(255,0,0,0.5);
-}
-p.event {
-    color: orange;
+#eventText {
+    font-size: 1.2em;
+    text-align: center;
+font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #21b96b;
 }
 
+.description {
+    /*font-size: 1em;*/
+    text-align: center;
+}
 
-p.label, label {
-    color: darkblue;
-    margin: 10px;
+.label {
+font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    margin: 5px;
+    /*padding: 5px;*/
+    font-weight: 500;
+        text-align: center;
+    color: #21b96b ;
+
+
+}
+
+/* General button style */
+.btn {
+    /*font-family: 'Quicksand', sans-serif;*/
+    font-family: 'Oswald', sans-serif;
+    border-radius: 12px;
+    border: none;
+    font-size: inherit;
+    color: white;
+    background:  #3498db;
+    cursor: pointer;
+    padding: 10px 25px;
+    display: inline-block;
+    margin: 15px 30px;
+    letter-spacing: 1px;
+    font-weight: 500;
+    position: relative;
+    transition: all 0.3s;
+    outline: none;
+}
+
+#randomBtn {
+    margin: 10px !important;
+    padding: 0px !important;
+        background-color: #eaf1f8;
+
+    font-size: 36px;
+}
+
+#randomNum {
+    height: 25px;
+    width: 80px;
+    background-color: white;
+    outline: #111111 solid 1px;
+     display:flex;
+    align-items:center;
+ font-family: 'Noto Serif Jp', serif;
+    font-size: 20px;
     font-weight: bold;
 
 }
 
 
+.btn:hover{
+    background: #2980b9;
+}
 
-myButton {
-    background-color: #4caf50;
-    width: 50%;
-    line-height: 1em;
-    border-radius: 13px;
-    font-family: Georgia, serif;
-    font-weight: normal;
-    text-decoration: none;
-    font-style: normal;
-    font-variant: normal;
-      border: none;
-  color: white;
-  padding: 20px;
+.btn:active {
+    background: #2980b9;
+    top: 2px;
+}
+
+
+.fa-play-circle {
+    vertical-align: -5px;
+}
+
+/*COLLAPSIBLE*/
+/* Style the button that is used to open and close the collapsible content */
+
+
+
+.break {
+    flex-basis: 100%;
+    height: 0;
+    margin: 5px;
+}
+
+
+.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    display: none;
+    /*z-index: 9999;*/
+}
+
+.failure {
+    color: #981208;
+    background-color: #f5928b;
+    border-color: #f55a4e;
+    display: none;
+    /*z-index: 9999;*/
+}
+
+#infoText {
+    visibility: visible;
+    position: absolute;
+    bottom: 5%;
+}
+
+#infoBtn {
+     position: absolute;
+       right: 55px;
+    top: 160px;
+}
+
+#contactInfo{
+     position:absolute;
+   bottom:30px;
+    left:45%;
+
+}
+
+.flexRow{
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    align-items: center;
+}
+
+
+.fab{
+    font-size: 30px;
   text-align: center;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+  text-decoration: none;
+    border-radius: 50%;
+    margin:10px;
+    opacity: 0.85;
+
+
 }
 
-myButton:hover {
-    background: #21b96b;
+/* Add a hover effect if you want */
+.fab:hover {
+  opacity: 1.0;
 }
 
-.button-block {
-    display: block;
-    width: 35%;
+
+.fa-linkedin-in{
+        padding: 20%;
+    background-color: #0e76a8;
+    color: white;
 }
+
+.fa-github{
+    background-color: white;
+    color: #333;
+}
+
+
+.rotate {
+    -moz-transition: all .5s linear;
+    -webkit-transition: all .5s linear;
+    transition: all .5s linear;
+}
+.rotate.down {
+    -moz-transform:rotate(360deg);
+    -webkit-transform:rotate(360deg);
+    transform:rotate(360deg);
+}
+
+

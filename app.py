@@ -5,13 +5,8 @@ import random
 import Db
 
 
-"""TODO: Fix apperance, add more filtering option (by pack, category), 
-start off category checkboxes with all chekced by default (create all button)
-change it so not having one section checked doesnt unchechk all
-update methods to jquery so no resetting data
-figure out .then for ajax to open generate
-see if using ajax makes sense for generate ("commente out as template not working)"""
-
+"""TODO: Fix abs pos items to not overlap (setting buttons, footer,) add in error handling , fix suggestion failur/success, add error handling, done!
+"""
 app = Flask(__name__)
 app.config["DEBUG"] = True
 app.config['SECRET_KEY'] = 'any secret string'
@@ -26,46 +21,21 @@ def home():
 
 @app.route('/generate', methods=('GET', 'POST'))
 def generate_event():
-    # conn = sqlite3.connect('events.db')
-    # conn.row_factory = dict_factory
-    # cur = conn.cursor()
-    # deathIncluded = choices['deaths']
-    # print(choices)
-    # ##add in error handling for if none exist
-    # packs = ["Basegame"]
-    # type = []
-    # z = 0
-    # y = 0
-    # for key in choices:
-    #     if (key == 'Household Events' or z == 1):
-    #         z = 1
-    #         if (choices[key] == True):
-    #             type.append(key)
-    #     if (key == 'Basegame' or y == 1):
-    #         y = 1
-    #         if (choices[key] == True):
-    #             packs.append(key)
-    # with conn:
-    #     # if (not deathIncluded):
-    #     #     cur.execute("""SELECT * FROM Sims4Test WHERE event IN
-    #     # (SELECT event FROM Sims4Test ORDER BY RANDOM() LIMIT 1) AND deadly = "0" """)
-    #     # else:
-    #     #     cur.execute("""SELECT * FROM Sims4Test WHERE event IN
-    #     #            (SELECT event FROM Sims4Test ORDER BY RANDOM() LIMIT 1) AND event_type = "Career" """)
-    #     #cur.execute("""SELECT * FROM Sims4Test WHERE event_type = ? ; """, ("Career",))
-    #     cur.execute('SELECT * FROM Sims4Test WHERE packsNeeded IN ({}) AND event_type IN ({})'
-    #                 .format((', '.join(['?'] * len(packs))), ', '.join(['?'] * len(type))), [*packs, *type])
-    #     chosen_event = cur.fetchall()
 
     chosen_event = Db.choose_event(choices)
     ##from list of matching options, randomly choose one
-    chosen_event = random.choice(chosen_event)
-    event = chosen_event.get("event", "no event found")
-    description = chosen_event.get("description", "no description available")
-    category = chosen_event.get("eventType", "no category")
+    try:
+        print(chosen_event)
+        chosen_event = random.choice(chosen_event)
+        event = chosen_event.get("event", "no event found")
+        description = chosen_event.get("description", "no description available")
+        category = chosen_event.get("eventType", "no category")
+        rollNeeded = chosen_event.get("rollNeeded", "null")
+    except:
+        print('nah')
 
 
-    return render_template('home.html', title='random In', event = event, description = description, category = category)
+    return render_template('home.html', title='random In', event = event, description = description, category = category, rollNeeded = rollNeeded)
 
 #
 # @app.route('/postmethod', methods = ['POST'])
@@ -78,8 +48,19 @@ def generate_event():
 def get_post_javascript_data():
     global choices
     jsdata = request.form['javascript_data']
-    choices  = json.loads(jsdata)
+    choices = json.loads(jsdata)
     return "OK"
+
+@app.route('/suggest', methods = ['POST'])
+def get_suggestion():
+    jsdata = request.form['javascript_data']
+    suggestion  = json.loads(jsdata)
+    Db.add_suggestion(suggestion)
+    print(suggestion)
+    return "ok"
+# @app.errorhandler(500)
+# def page_not_found(e):
+#     return render_template('home.html'), 500
 
 if __name__ == '__main__':
     app.run()
