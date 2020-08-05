@@ -1,10 +1,9 @@
-var packCheckBoxes = document.getElementsByName("packsIncluded[]");
-var categoryCheckBoxes = document.getElementsByName("categoriesIncluded[]");
-var checkBoxes = document.getElementsByClassName("checkBox")
-var saveBtn = document.getElementById('saveBtn')
+const packCheckBoxes = document.getElementsByName("packsIncluded[]");
+const categoryCheckBoxes = document.getElementsByName("categoriesIncluded[]");
+const checkBoxes = document.getElementsByClassName("checkBox");
 
 
-//save whether checkbox is checked or not in local storage
+//save whether settting checkbox is checked
 function saveChoices(array) {
     array.forEach(function (checkBox) {
         localStorage.setItem(checkBox.id, checkBox.checked);
@@ -12,7 +11,7 @@ function saveChoices(array) {
     })
 }
 
-//load whether checkboxes where checked or unchecked
+//load checkbox last state and set
 function load() {
     [].forEach.call(checkBoxes, function (checkBox) {
         let checked = JSON.parse(localStorage.getItem(checkBox.id));
@@ -20,17 +19,17 @@ function load() {
     });
 }
 
-//check whether a checkbox in the group has been selected
+//check whether a settings checkbox in the group has been selected
 function isChecked(array) {
     let notChecked = 0
     array.forEach(function (checkBox) {
-        if (checkBox.checked == false) {
+        if (checkBox.checked === false) {
             notChecked += 1;
         }
     })
 
-    //all unchecked
-    if (notChecked == array.length) {
+    //if all unchecked return false, else return true
+    if (notChecked === array.length) {
         return false;
     } else {
         return true
@@ -40,6 +39,7 @@ function isChecked(array) {
 //make sure at least one category is checked
 function checkCategories() {
     let category = isChecked(categoryCheckBoxes);
+
     //save choice if checkbox checked else display alert
     if (category) {
         saveChoices(categoryCheckBoxes);
@@ -51,8 +51,8 @@ function checkCategories() {
 }
 
 
-//create dictonary of each checkbox and their state
-function createDictonary() {
+//create dictionary containing each setting checkbox and their state
+function createDictionary() {
     let dict = {};
     [].forEach.call(checkBoxes, function (checkBox) {
         dict[checkBox.id] = checkBox.checked;
@@ -60,9 +60,9 @@ function createDictonary() {
     return (dict);
 }
 
-//send checkbox states to python
+//send setting checkbox states to python
 function sendChoices() {
-    let dict = createDictonary();
+    let dict = createDictionary();
     let json_dict = JSON.stringify(dict);
     //might need to add more in body + error handling
     $.post("/selection", {
@@ -70,19 +70,23 @@ function sendChoices() {
     });
 }
 
+//send user suggestion to python
 function sendSuggestion() {
-    deaths = document.getElementById('s_deaths');
-    roll = document.getElementById('s_roll');
+    let deaths = document.getElementById('s_deaths');
+    let roll = document.getElementById('s_roll');
     let description = document.getElementById('s_description');
-    eventName = document.getElementById('s_eventName');
-    categories = document.getElementsByName('categories')
+    let eventName = document.getElementById('s_eventName');
+    let categories = document.getElementsByName('categories')
     let category = "";
-    [].forEach.call(categories, function (checkBox) {
-        if (checkBox.checked) {
-            category = checkBox.id
+
+    //set category to selected radio button
+    [].forEach.call(categories, function (radioButton) {
+        if (radioButton.checked) {
+            category = radioButton.id
         }
     });
 
+    //create dictionary with all values
     let dict = {
         'death': deaths.checked,
         'roll': roll.checked,
@@ -91,22 +95,17 @@ function sendSuggestion() {
         'category': category
     };
 
+    //change to json object then send to python
 
     let json_dict = JSON.stringify(dict);
 
     $.post("/suggest", {
         javascript_data: json_dict,
-        success: function (msg) {
-            $("#suggestSuccess").fadeIn(300).delay(1000).fadeOut(400);
-        },
-        error: function (error) {
-            $("#suggestFailure").fadeIn(300).delay(1000).fadeOut(400);
-        }
     });
 }
 
 
-//when 'all' button is pressed, checked all respective checboxes
+//when 'all' button is pressed, check all respective checkboxes
 function checkAll(id) {
     if (id == "allCategories") {
         categoryCheckBoxes.forEach(function (checkbox) {
@@ -124,21 +123,27 @@ function checkAll(id) {
 function save() {
     //save user choice for packs included
     saveChoices(packCheckBoxes)
+
     //see if at least one category has been checked and save if it has been
     let saved = checkCategories();
     let deathIncluded = document.getElementById('deaths')
-    localStorage.setItem('saveValid', saved)
+
+    //set whether save is valid or not for generate button
+    localStorage.setItem('saveValid', String(saved))
 
     //if categories are good
     if (saved) {
-        //save deathIncluded state
+        //save deathIncluded state and show confirmation
         localStorage.setItem(deathIncluded.id, deathIncluded.checked);
-        $("div.success").fadeIn(300).delay(1000).fadeOut(400);
+        $("#saveFailure").fadeIn(300).delay(1000).fadeOut(400);
     }
 
 }
 
+//called when generate new event button clicked
 function generate() {
+    //if valid settings generate new event else show failure notification
+
     if (JSON.parse(localStorage.getItem('saveValid')) === true) {
         sendChoices();
         location.assign('/generate');
@@ -147,9 +152,10 @@ function generate() {
     }
 }
 
+//random number generator for events that need it
 function random() {
     document.getElementById('randomBtn').classList.toggle("down");
-    num = Math.random() * 11 | 0;
-    document.getElementById("randomNum").innerHTML = num;
+    let num = Math.random() * 11 | 0;
+    document.getElementById("randomNum").innerHTML = String(num);
 
 }

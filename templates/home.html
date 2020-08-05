@@ -4,23 +4,23 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/modal.css') }}"/>
 
-    <meta charset="UTF-8">
-    <title>Random Sims 4 event generator</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"
             integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-
     <script src="https://kit.fontawesome.com/712ad128a2.js" crossorigin="anonymous"></script>
+
+    <meta charset="UTF-8">
+    <title>Random Sims 4 event generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
 
 
 </head>
 
-
+{#when page loads set checkboxes#}
 <body onload="load()">
 
-
-
+{#fancy header with title + name#}
 <div id="titleHeader">
     <h2 class="decorated fancyText" id="simsText"><span>THE SIMS 4</span></h2>
     <h1> Random Event Generator </h1>
@@ -29,9 +29,9 @@
 </div>
 
 <div>
-
+    {#if event is generated, display it#}
     {% include 'displayEvents.html' %}
-    <!--Generate Button -->
+    {#generate button#}
     <div style="text-align: center">
         <div class="failure" id="generateFailure">Failure: Please Choose A Category In The Settings</div>
         <button class="btn btn-1" onclick="generate();" type="button"
@@ -41,18 +41,19 @@
         </button>
     </div>
 
-    {#  modals #}
+    {#MODALS#}
+    {#  setting button #}
     <button class=" modalButton" id="settingsBtn"
             onclick="document.getElementById('settingsModal').style.display='block'" title="Open Settings"><i
             class="fas fa-cog"></i></button>
-
+    {#setting modal#}
     <div id="settingsModal" class="modal">
         <span onclick="document.getElementById('settingsModal').style.display='none'" class="close" title="Close Modal">&times;</span>
         <div class="modal-content">
             <div class="container1">
-                <h1>SETTINGS</h1>
+                <h1 class="header">SETTINGS</h1>
                 {% include 'settings.html' %}
-                <div class="success">Save Succesfull</div>
+                <div class="success" id="saveSuccess">Save Succesful</div>
                 <div class="failure" id="saveFailure">Failure: Please Choose A Category</div>
                 <button type="button" class="btn" id="saveBtn" value="" onclick="save()">S A V E
                 </button>
@@ -60,67 +61,71 @@
         </div>
     </div>
 
+    {#about button#}
     <button class="modalButton" onclick="document.getElementById('infoModal').style.display='block'"
             id="infoBtn" title="About this webpage"><i class="fa fa-info-circle" aria-hidden="true"></i>
     </button>
-
+    {#About webpage modal#}
     <div id="infoModal" class="modal">
         <span onclick="document.getElementById('infoModal').style.display='none'" class="close" title="Close Modal">&times;</span>
         <div class="modal-content">
             <div class="container1">
-                <h1 style="color:#21b96b">SUL SUL!</h1>
+                <h1 class="header">SUL SUL!</h1>
                 <p>The Sims 4 Random Event Generator is made for simmers who want to spice up their gameplay.</p><br>
-                    <b style="text-align: center">HOW TO USE:</b><br>
-                    <ol>
-                <li>Open settings with the <i class="fas fa-cog"></i>  to the left
-                    and choose whether you'd like <b>deadly events</b>, which <b>packs</b> you have,
-                    and which <b>categories</b> you'd like to include</li>
-                <li>Press the save button, then press 'Generate New Event'</li>
-                <li>If the event require a dice roll, press the die that appears below</li>
+                <b style="text-align: center">HOW TO USE:</b><br>
+                <ol>
+                    <li>Open settings with the <i class="fas fa-cog"></i> to the left
+                        and choose whether you'd like <b>deadly events</b>, which <b>packs</b> you have,
+                        and which <b>categories</b> you'd like to include
+                    </li>
+                    <li>Press the save button, then press 'Generate New Event'</li>
+                    <li>If the event require a dice roll, press the die that appears below</li>
                 </ol>
-                <br><p>If you have any suggestions for events to include,
+                <br>
+                <p>If you have any suggestions for events to include,
                     please press the <i class="fa fa-lightbulb-o" aria-hidden="true"></i> to the right and send them in.
-                <h1 style="color:#21b96b">HAPPY SIMMING!</h1>
+                <h1 class="header">HAPPY SIMMING!</h1>
             </div>
         </div>
     </div>
 
-
+    {#suggestion button#}
     <button class="modalButton" onclick="document.getElementById('suggestionModal').style.display='block'"
             id="suggestBtn" title="Suggest an event"><i class="fa fa-lightbulb-o" aria-hidden="true"></i>
     </button>
-
+    {#suggestions modal#}
     <div id="suggestionModal" class="modal">
-        <span onclick="document.getElementById('suggestionModal').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <span onclick="document.getElementById('suggestionModal').style.display='none'" class="close"
+              title="Close Modal">&times;</span>
         <div class="modal-content">
             <div class="container1">
-                <h1>SUGGEST AN EVENT</h1>
-
-                    {% include 'suggestions.html' %}
+                <h1 class="header" >SUGGEST AN EVENT</h1>
+                <p>Have a suggestion for a random event? I'd love to hear it! Fill in the form below
+                    for a chance to have your event added! </p><br>
+                {% include 'suggestions.html' %}
 
             </div>
         </div>
     </div>
-{#Only show dice if needed#}
-        {% if rollNeeded %}
-    <div class="flexRow">
-        <button onclick="random()" class="btn rotate" id="randomBtn">&#127922;
-        </button>
-        <p id="randomNum" > </p>
-    </div>
+
+    {#Dice random number generator (only shown when needed)#}
+    {% if rollNeeded %}
+        <div class="flexRow">
+            <button onclick="random()" class="btn rotate" id="randomBtn">&#127922;
+            </button>
+            <p id="randomNum"></p>
+        </div>
     {% endif %}
 </div>
 
-
-<div class="flexRow" id="contactInfo">
+{#footer with contact information #}
+<div class="flexRow" style="text-align: center;" id="contactInfo">
     <h4>Follow Me!</h4>
     <a href="https://ca.linkedin.com/in/tahjeira-cameron-7aa455195"><i class="fab fa-linkedin-in icon fa-lg"></i></a>
     <a href="https://github.com/tahjeirac"><i class="fab fa-github icon" aria-hidden="true"></i></a>
-
 </div>
 
 
 <script type=text/javascript src="{{ url_for('static', filename='JS/main.js') }}"></script>
-<script type=text/javascript src="{{ url_for('static', filename='JS/Collapse.js') }}"></script>
 </body>
 </html>

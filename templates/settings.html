@@ -1,13 +1,13 @@
-{#<button type="button" class="collapsible">Settings#}
-{#    <button type="button" class="collapsible" ><i class="fas fa-cog"></i>#}
-{#</button>#}
-{#<div class="content container checkBoxContainer">#}
+{#display settings in modal#}
+
+{#checkbox for deadly events#}
 <div>
     <input type="checkbox" class="checkBox" id="deaths" name="deaths" value="deaths">
-    <label for="deaths">Deaths Included?</label><br>
+    <label for="deaths">Deadly events?</label><br>
 </div>
 <div class="container  checkBoxContainer">
 
+    {#checkboxes for packs#}
     <h2>Packs Included</h2>
 
     <div class="break"></div>
@@ -23,7 +23,6 @@
         <label for="Get To Work">Get to Work</label>
     </div>
 
-
     <div>
         <input type="checkbox" class="checkBox" name="packsIncluded[]" id="University"
                value="University">
@@ -36,12 +35,12 @@
         <label for="Strangerville">Strangerville</label>
     </div>
 
-
+    {# all button for packs#}
     <div class="break"></div>
     <button class="btn allBtn" id="allPacks" onclick="checkAll(id);">All</button>
     <div class="break"></div>
 
-
+    {#checkboxes for categories#}
     <h2>Categories </h2>
     <div class="break"></div>
 
@@ -73,7 +72,7 @@
 
     <div class="break"></div>
 
+    {#all button for categories#}
     <button class="btn allBtn" id="allCategories" onclick="checkAll(id);">All</button>
 </div>
 
-{#</div>#}

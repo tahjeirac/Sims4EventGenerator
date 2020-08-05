@@ -1,61 +1,84 @@
 import sqlite3
 
 
-def dict_factory(cursor, row):
+# return sqlite objects as dict
+def dict_factory(cur, row):
     d = {}
-    # ennumerate has built in counter
-    for idx, col in enumerate(cursor.description):
+    for idx, col in enumerate(cur.description):
         d[col[0]] = row[idx]
     return d
 
 
-def choose_event (filters):
+# get list of events matching user filter
+def choose_events(filters):
     conn = sqlite3.connect('events.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
-    deathIncluded = filters['deaths']
-    ##add in error handling for if none exist
+
+    # always include basegame
     packs = ["Basegame"]
-    type = []
+    categories = []
+    # always include non-deadly events
     death = ['0']
+
     z = 0
     y = 0
+
     for key in filters:
+        # add household events and anything after to categories array
         if (key == 'Household Events' or z == 1):
             z = 1
-            if (filters[key] == True):
-                type.append(key)
+            if filters[key]:
+                categories.append(key)
+
+        # add pets and and anything after to pack array, until household events
         elif (key == 'Pets' or y == 1):
             y = 1
-            if (filters[key] == True):
+            if filters[key]:
                 packs.append(key)
 
-    if deathIncluded:
+    death_included = filters['deaths']
+    # if user wants deadly events, add '1' to array
+    if death_included:
         death.append('1')
-    print(death)
 
-    #might not need with conn, close connection??
-    with conn:
-        ##make formatting cleaner
-        cur.execute('''SELECT * FROM Sims4Events WHERE packsNeeded IN ({}) 
-                        AND eventType IN ({}) AND deadly IN ({}) '''
-                    .format((', '.join(['?'] * len(packs))),(', '.join(['?'] * len(type))), (', '.join(['?'] * len(death)))), [*packs, *type, *death])
-        chosen_events = cur.fetchall()
+    # get matching events from database
+    try:
+        with conn:
+            cur.execute('''SELECT * FROM Sims4Events WHERE packsNeeded IN ({}) 
+                            AND eventType IN ({}) AND deadly IN ({}) '''
+                        .format(db_formatting(packs), db_formatting(categories), db_formatting(death)),
+                        [*packs, *categories, *death])
+            chosen_events = cur.fetchall()
+        return chosen_events
+    except sqlite3.Error as er:
+        print(er)
+        return 0
 
-    return chosen_events
 
+# format IN with array
+def db_formatting(array):
+    return ', '.join(['?'] * len(array))
+
+
+# send user suggestion to database
 def add_suggestion(suggestion):
-    #automatically commits or rolls back (if eexception) connections
     conn = sqlite3.connect('events.db')
-    conn.row_factory = dict_factory
     cur = conn.cursor()
+    conn.row_factory = dict_factory
+
     death = suggestion['death']
     roll = suggestion['roll']
     description = suggestion['description']
-    eventName = suggestion['eventName']
+    event_name = suggestion['eventName']
     category = suggestion['category']
 
-    with conn:
-        cur.execute("INSERT INTO suggestions VALUES (:eventName,:description, :category, :deadly,:rollNeeded)",
-                    {'eventName': eventName,'description':description, 'category': category,
-                     'deadly': death, 'rollNeeded': roll})
+    success = ''
+
+    try:
+        with conn:
+            cur.execute("INSERT INTO suggestions VALUES (:eventName,:description, :category, :deadly,:rollNeeded)",
+                        {'eventName': event_name, 'description': description, 'category': category,
+                         'deadly': death, 'rollNeeded': roll})
+    except sqlite3.Error as er:
+        print('er')
