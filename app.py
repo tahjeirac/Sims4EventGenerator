@@ -2,14 +2,15 @@ import json
 from flask import Flask, render_template, request
 import random
 import Db
+import settings
 
 """TODO: Fix abs pos items to not overlap (setting buttons, footer,) 
-   add in error handling , fix suggestion failure/success, add error handling, done!
+   add in error handling , fix suggestion failure/success, done!
 """
 
 app = Flask(__name__)
-app.config["DEBUG"] = True
-app.config['SECRET_KEY'] = 'any secret string'
+app.config["DEBUG"] = settings.DEBUG
+app.config['SECRET_KEY'] = settings.SECRET_KEY
 
 choices = ""
 
@@ -45,7 +46,7 @@ def get_post_javascript_data():
     global choices
     jsdata = request.form['javascript_data']
     choices = json.loads(jsdata)
-    return 0
+    return 'Ok'
 
 
 # get user suggestion and insert into database
