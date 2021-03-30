@@ -37,7 +37,7 @@ pandocfilters==1.4.2
 parso==0.7.1
 pickleshare==0.7.5
 prompt-toolkit==3.0.5
-Pygments==2.6.1
+Pygments==2.7.4
 pylint==2.5.3
 pyparsing==2.4.7
 pyrsistent==0.16.0
