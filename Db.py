@@ -36,8 +36,9 @@ def choose_events(filters):
             y = 1
             if filters[key]:
                 packs.append(key)
-
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', filters)
     death_included = filters['deaths']
+    print('after')
     # if user wants deadly events, add '1' to array
     if death_included:
         death.append('1')

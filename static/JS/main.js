@@ -3,6 +3,7 @@ const categoryCheckBoxes = document.getElementsByName("categoriesIncluded[]");
 const checkBoxes = document.getElementsByClassName("checkBox");
 
 
+
 //save whether settting checkbox is checked
 function saveChoices(array) {
     array.forEach(function (checkBox) {
@@ -39,13 +40,16 @@ function isChecked(array) {
 //make sure at least one category is checked
 function checkCategories() {
     let category = isChecked(categoryCheckBoxes);
-
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     //save choice if checkbox checked else display alert
     if (category) {
         saveChoices(categoryCheckBoxes);
+        $("#saveSuccess").fadeIn(300).delay(1000).fadeOut(400);
+        console.log('dddddsd');
         return true;
     } else {
-        $("#saveFailure").fadeIn(300).delay(1000).fadeOut(400);
+        $("#saveSuccess").fadeIn(300).delay(1000).fadeOut(400);
+        console.log('ficled');
         return false;
     }
 }
@@ -61,7 +65,7 @@ function createDictionary() {
 }
 
 //send setting checkbox states to python
-function sendChoices() {
+async function sendChoices() {
     let dict = createDictionary();
     let json_dict = JSON.stringify(dict);
     //might need to add more in body + error handling
@@ -133,19 +137,24 @@ function save() {
 
     //if categories are good
     if (saved) {
+        $("#saveSuccess").fadeIn(300).delay(1000).fadeOut(400);
+        console.log('saved');
         //save deathIncluded state and show confirmation
         localStorage.setItem(deathIncluded.id, deathIncluded.checked);
-        $("#saveFailure").fadeIn(300).delay(1000).fadeOut(400);
+    } else {
+        console.log('bad');
+        $("#saveSuccess").fadeIn(300).delay(1000).fadeOut(400);
+
     }
 
 }
 
 //called when generate new event button clicked
-function generate() {
+async function generate() {
     //if valid settings generate new event else show failure notification
 
     if (JSON.parse(localStorage.getItem('saveValid')) === true) {
-        sendChoices();
+        await sendChoices();
         location.assign('/generate');
     } else {
         $("#generateFailure").fadeIn(300).delay(1000).fadeOut(400);

@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 app.config['SECRET_KEY'] = 'any secret string'
 
-choices = ""
+choices = ''
 
 
 @app.route('/', methods=('GET', 'POST'))
@@ -42,10 +42,10 @@ def generate_event():
 # get user filters and update 'choices' variable
 @app.route('/selection', methods=['POST'])
 def get_post_javascript_data():
-    global choices
     jsdata = request.form['javascript_data']
+    global choices 
     choices = json.loads(jsdata)
-    return 0
+    return 'OK'
 
 
 # get user suggestion and insert into database
@@ -54,7 +54,7 @@ def get_suggestion():
     jsdata = request.form['javascript_data']
     suggestion = json.loads(jsdata)
     Db.add_suggestion(suggestion)
-    return 0
+    return 'OK'
 
 
 if __name__ == '__main__':
