@@ -13,7 +13,9 @@ function saveChoices(array) {
 
 //load checkbox last state and set
 function load() {
-    console.log('loaded');
+    console.log(`Nice to see you down here! While you\'re poking around,
+    listen to my favourite simlish song: https://www.youtube.com/watch?v=ZzlGgLoY3hQ
+    and shoot me a message :)`);
     [].forEach.call(checkBoxes, function (checkBox) {
         let checked = JSON.parse(localStorage.getItem(checkBox.id));
         document.getElementById(checkBox.id).checked = checked;
@@ -40,9 +42,7 @@ function isChecked(array) {
 
 //make sure at least one category is checked
 async function checkCategories() {
-    console.log('array', categoryCheckBoxes);
     let category = isChecked(categoryCheckBoxes);
-    console.log(category, 'cat');
     //save choice if checkbox checked else display alert
     if (category) {
         saveChoices(categoryCheckBoxes);
@@ -67,13 +67,14 @@ function createDictionary() {
 async function sendChoices() {
     let dict = createDictionary();
     let json_dict = JSON.stringify(dict);
+    console.log(json_dict)
     //might need to add more in body + error handling
     $.post("/selection", {
         javascript_data: json_dict
     });
 }
 
-//send user suggestion to python
+//send user suggestion to python fix radio buttons
 function sendSuggestion() {
     let deaths = document.getElementById('s_deaths');
     let roll = document.getElementById('s_roll');
@@ -81,7 +82,6 @@ function sendSuggestion() {
     let eventName = document.getElementById('s_eventName');
     let categories = document.getElementsByName('categories')
     let category = "";
-
     //set category to selected radio button
     [].forEach.call(categories, function (radioButton) {
         if (radioButton.checked) {
@@ -104,9 +104,23 @@ function sendSuggestion() {
 
     $.post("/suggest", {
         javascript_data: json_dict,
-    });
+    }
+        , (status) => {
+            suggestionSuccess(status)
+
+        });
+
 }
 
+
+function suggestionSuccess(status) {
+    console.log(status);
+    if (status == 'Ok') {
+        $("#suggestSuccess").fadeIn(300).delay(2000).fadeOut(400);
+    } else {
+        $("#suggestFailure").fadeIn(300).delay(2000).fadeOut(400);
+    }
+}
 
 //when 'all' button is pressed, check all respective checkboxes
 function checkAll(id) {

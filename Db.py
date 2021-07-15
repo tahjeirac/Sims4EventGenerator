@@ -1,3 +1,4 @@
+from os import X_OK
 import sqlite3
 
 
@@ -36,9 +37,8 @@ def choose_events(filters):
             y = 1
             if filters[key]:
                 packs.append(key)
-    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', filters)
+    print('FILTERTS', filters)
     death_included = filters['deaths']
-    print('after')
     # if user wants deadly events, add '1' to array
     if death_included:
         death.append('1')
@@ -74,12 +74,11 @@ def add_suggestion(suggestion):
     event_name = suggestion['eventName']
     category = suggestion['category']
 
-    success = ''
-
     try:
         with conn:
             cur.execute("INSERT INTO suggestions VALUES (:eventName,:description, :category, :deadly,:rollNeeded)",
                         {'eventName': event_name, 'description': description, 'category': category,
                          'deadly': death, 'rollNeeded': roll})
     except sqlite3.Error as er:
-        print('er')
+        print(er)
+        raise ValueError('Adding Suggestion Failed')

@@ -1,5 +1,4 @@
-<form action="/" method="post" onsubmit="sendSuggestion()">
-    {#    fix alert for succesful submission#}
+<form action="/" method="post" onsubmit="sendSuggestion(); return false">
     <div class="flexRow">
         <div>
             <input type="checkbox" class="checkBox" id="s_deaths">
@@ -27,8 +26,7 @@
 
     <div class="flexRow">
         <div>
-            <input type="radio" class="checkBox" name="categories" id="s_Household Events"
-                   required>
+            <input type="radio" class="checkBox" name="categories" id="s_Household Events" required>
             <label for="s_Household Events">Household Events</label>
         </div>
 
@@ -53,7 +51,7 @@
         </div>
     </div>
     <div class="success" id="suggestSuccess">Success!</div>
-    <div class="failure" id="suggestFailure">Something went wrong</div>
+    <div class="failure" id="suggestFailure">Something went wrong, please try again later</div>
 
     <input type="submit" class="btn">
 </form>

@@ -1,15 +1,20 @@
+from flask import render_template
 import json
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, abort
 import random
 import Db
+import smtplib
+import ssl
+import traceback
+from email.message import EmailMessage
 
-"""TODO: Fix abs pos items to not overlap (setting buttons, footer,) 
-   add in error handling , fix suggestion failure/success, add error handling, done!
+
+"""TODO:
+   add in error handling for generate , contact if accepted, reszing issues, max number of emails done!
 """
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
-app.config['SECRET_KEY'] = 'any secret string'
 
 choices = ''
 
@@ -20,17 +25,18 @@ def home():
 
 
 # choose and display random event
-@app.route('/generate', methods=('GET', 'POST'))
+@ app.route('/generate', methods=('GET', 'POST'))
 def generate_event():
-    print (choices);
+    print(choices)
     chosen_event = Db.choose_events(choices)
-
+    print('!!!!!!!!!!!!!ADTER')
     # from list of matching events, randomly choose and display one
     try:
         chosen_event = random.choice(chosen_event)
         # set events name, description, category, and whether the random number generator is needed
         event = chosen_event.get("event", "no event found")
-        description = chosen_event.get("description", "no description available")
+        description = chosen_event.get(
+            "description", "no description available")
         category = chosen_event.get("eventType", "no category")
         roll_needed = chosen_event.get("rollNeeded", "null")
     except:
@@ -41,21 +47,60 @@ def generate_event():
 
 
 # get user filters and update 'choices' variable
-@app.route('/selection', methods=['POST'])
+@ app.route('/selection', methods=['POST'])
 def get_post_javascript_data():
     jsdata = request.form['javascript_data']
-    global choices 
+    global choices
     choices = json.loads(jsdata)
     return 'Ok'
 
 
 # get user suggestion and insert into database
-@app.route('/suggest', methods=['POST'])
+@ app.route('/suggest', methods=['POST'])
 def get_suggestion():
-    jsdata = request.form['javascript_data']
-    suggestion = json.loads(jsdata)
-    Db.add_suggestion(suggestion)
-    return 'Ok'
+    try:
+        jsdata = request.form['javascript_data']
+        suggestion = json.loads(jsdata)
+        Db.add_suggestion(suggestion)
+        return 'Ok'
+    except:
+        return 'Bad'
+
+
+@ app.errorhandler(500)
+def internal_error(err):
+    email_message = 'Hi me, something went wrong, you should check it out: \n \n'
+    email_message += traceback.format_exc()
+    email_message += '\n \n Good luck :)'
+
+    send_email('500', email_message)
+    return render_template('500.html')
+
+
+@ app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
+
+
+def send_email(error, message_body):
+    try:
+        port = 465  # For SSL
+        smtp_server = "smtp.gmail.com"
+        
+
+        msg = EmailMessage()
+        msg['Subject'] = error
+        msg['To'] = 'sims4events@gmail.com'
+        msg.set_content(message_body)
+
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+            server.login(my_email, password)
+            server.sendmail(my_email, my_email, msg.as_string())
+        return 1
+    except:
+        return 0
 
 
 if __name__ == '__main__':

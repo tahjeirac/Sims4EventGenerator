@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&display=swap');
+
+body,
+html {
+  background: url(../images/test.PNG) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+h1 {
+margin: 0px;
+font-family: 'Luckiest Guy', cursive;
+font-size: 14vh;
+
+}
+
+p {
+color: #ffffff;
+text-shadow: #000000 2px 2px 2px;
+
+}
+
+#container {
+    display: flex;           /* establish flex container */
+    flex-direction: column;  /* make main axis vertical */
+    justify-content: center; /* center items vertically, in this case */
+    align-items: center;     /* center items horizontally, in this case */
+    height: 85vh;
+
+}
+
+.box {
+    width: 70vw;
+    margin: 5px;
+    text-align: center;     /* will center text in <p>, which is not a flex item */
+}
+
+#outlinedText {
+    color: #981208;
+    text-shadow: rgb(0, 0, 0) 5px 5px 10px;
+    -webkit-font-smoothing: antialiased;
+}
+
+#simlishTrans {
+    font-size: 2vh;
+    margin-top: 0px;
+margin-bottom: 5px;
+}
+
+#notified {
+    font-size: 2.7vh;
+    margin-top: 6vh;
+margin-bottom: 2vh;
+}
+
+
+button {
+    font-family: 'Oswald', sans-serif;
+    border-radius: 12px;
+    border: none;
+    font-size: inherit;
+    color: white;
+    background:  #3498db;
+    cursor: pointer;
+    padding: 10px 25px;
+    display: inline-block;
+    margin: 15px 30px;
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-size: 1.5vw;
+    position: relative;
+    transition: all 0.3s;
+    outline: none;
+    margin-top: 0px;
+
+}
+
+button:hover{
+    background: #2980b9;
+}
+
+button:active {
+    background: #2980b9;
+    top: 2px;
+}
+
+
