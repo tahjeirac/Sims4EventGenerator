@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/modal.css') }}" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/712ad128a2.js" crossorigin="anonymous"></script>
 
@@ -40,7 +40,7 @@
             <div class="failure" id="generateFailure">Failure: Please Choose A Category In The Settings</div>
             {% if failure %}
             <div class="failure" style="display: block; margin-top: 15px" id="generatePageFailure">Generate failed:
-                Please  go back <a href='/'>home</a> and check your settings</div>
+                Please go back <a href='/'>home</a> and check your settings</div>
             {%endif %}
             <button class="btn btn-1" onclick="generate();" type="button" title="Generate a random event">
                 <i class="fa fa-play-circle fa-2x" aria-hidden="true"></i>

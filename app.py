@@ -10,12 +10,11 @@ from email.message import EmailMessage
 
 
 """TODO:
-   add in error handling for generate , contact if accepted, reszing issues, max number of emails done!
+   reszing issues, max number of emails done!
 """
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
-app.config['SECRET_KEY'] = 'any secret string'
 
 choices = ''
 
@@ -59,6 +58,7 @@ def get_post_javascript_data():
 @ app.route('/suggest', methods=['POST'])
 def get_suggestion():
     try:
+        print('suggg')
         jsdata = request.form['javascript_data']
         suggestion = json.loads(jsdata)
         Db.add_suggestion(suggestion)
@@ -87,8 +87,6 @@ def send_email(error, message_body):
     try:
         port = 465  # For SSL
         smtp_server = "smtp.gmail.com"
-        my_email = 'sims4events@gmail.com'
-        password = "Sims4Events!"
         msg = EmailMessage()
         msg['Subject'] = error
         msg['To'] = 'sims4events@gmail.com'

@@ -80,7 +80,8 @@ function sendSuggestion() {
     let roll = document.getElementById('s_roll');
     let description = document.getElementById('s_description');
     let eventName = document.getElementById('s_eventName');
-    let categories = document.getElementsByName('categories')
+    let email = document.getElementById('s_email');
+    let categories = document.getElementsByName('categories');
     let category = "";
     //set category to selected radio button
     [].forEach.call(categories, function (radioButton) {
@@ -95,7 +96,8 @@ function sendSuggestion() {
         'roll': roll.checked,
         'description': description.value,
         'eventName': eventName.value,
-        'category': category
+        'category': category,
+        'email': email.value
     };
 
     //change to json object then send to python
@@ -114,7 +116,6 @@ function sendSuggestion() {
 
 
 function suggestionSuccess(status) {
-    console.log(status);
     if (status == 'Ok') {
         $("#suggestSuccess").fadeIn(300).delay(2000).fadeOut(400);
     } else {

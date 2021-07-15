@@ -73,12 +73,13 @@ def add_suggestion(suggestion):
     description = suggestion['description']
     event_name = suggestion['eventName']
     category = suggestion['category']
-
+    email = suggestion['email']
+    print('email', email)
     try:
         with conn:
-            cur.execute("INSERT INTO suggestions VALUES (:eventName,:description, :category, :deadly,:rollNeeded)",
+            cur.execute("INSERT INTO suggestions VALUES (:eventName,:description, :category, :deadly,:rollNeeded, :email)",
                         {'eventName': event_name, 'description': description, 'category': category,
-                         'deadly': death, 'rollNeeded': roll})
+                         'deadly': death, 'rollNeeded': roll, 'email': email})
     except sqlite3.Error as er:
         print(er)
         raise ValueError('Adding Suggestion Failed')
