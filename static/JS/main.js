@@ -28,7 +28,6 @@ function isChecked(array) {
     array.forEach(function (checkBox) {
         if (checkBox.checked === false) {
             notChecked += 1;
-            console.log(checkBox.id, 'not checked')
         }
     })
 
@@ -67,7 +66,6 @@ function createDictionary() {
 async function sendChoices() {
     let dict = createDictionary();
     let json_dict = JSON.stringify(dict);
-    console.log(json_dict)
     //might need to add more in body + error handling
     $.post("/selection", {
         javascript_data: json_dict
@@ -182,3 +180,5 @@ function random() {
     document.getElementById("randomNum").innerHTML = String(num);
 
 }
+
+

@@ -1,17 +1,17 @@
 {#Display random event#}
 <div>
     {% if event %}
-        <H4 id="eventText"> {{ event }} : </H4>
+    <H4 id="eventText"> {{ event }} : </H4>
     {% endif %}
 
     {% if description %}
-        <p class="description"> {{ description }}  </p>
+    <p class="description"> {{ description }} </p>
     {% endif %}
     <div class="flexRow">
         {% if category %}
-            <p class="label"> Category: </p>
+        <p class="label"> Category: </p>
 
-            <p class="description"> {{ category }}  </p>
+        <p class="description"> {{ category }} </p>
         {% endif %}
 
     </div>

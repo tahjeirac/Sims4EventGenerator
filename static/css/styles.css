@@ -310,7 +310,8 @@ a:hover {
 a:active {
     color: 250401;
   }
-/* Courtsey of  */
+
+/* Courtsey of  Jake Jarvis: https://jarv.is/notes/css-waving-hand-emoji/*/
 .wave {
     animation-name: wave-animation;  /* Refers to the name of your @keyframes element below */
     animation-duration: 2.5s;        /* Change to speed up or slow down */

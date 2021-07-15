@@ -1,0 +1,50 @@
+<html lang="en">
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css"> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+    <script type=text/javascript src="{{ url_for('static', filename='JS/display.js') }}"></script>
+
+</head>
+
+<body style="background: #fafeff;">
+    {#Display random event#}
+    <div style="margin: 20px;">
+        <table id="events_table" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Description</th>
+                    <th>Type of Event</th>
+                    <th>Packs Needed</th>
+                    <th>Deadly</th>
+                    <th>Roll Needed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr>
+                    <td>{{event['event']}}</td>
+                    <td>{{event['description']}}</td>
+                    <td>{{event['eventType']}}</td>
+                    <td>{{event['packsNeeded']}}</td>
+                    <td>{{event['deadly']}}</td>
+                    <td>{{event['rollNeeded']}}</td>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    </div>
+
+    </div>
+</body>
+
+</html>

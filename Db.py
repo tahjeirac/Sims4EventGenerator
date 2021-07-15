@@ -83,3 +83,37 @@ def add_suggestion(suggestion):
     except sqlite3.Error as er:
         print(er)
         raise ValueError('Adding Suggestion Failed')
+
+
+def check_emails():
+    conn = sqlite3.connect('events.db')
+    cur = conn.cursor()
+    conn.row_factory = dict_factory
+
+    try:
+        with conn:
+            cur.execute('''SELECT * FROM emails WHERE date IN ({}) 
+                            AND eventType IN ({}) AND deadly IN ({}) ''')
+    except sqlite3.Error as er:
+        print(er)
+        raise ValueError('Adding Suggestion Failed')
+
+
+def get_all():
+    conn = sqlite3.connect('events.db')
+    conn.row_factory = dict_factory
+    cur = conn.cursor()
+
+    try:
+        with conn:
+            cur.execute('''SELECT * 
+                        FROM 
+                            Sims4Events 
+                        ''')
+            chosen_events = cur.fetchall()
+            return(chosen_events)
+    except sqlite3.Error as er:
+        print(er)
+        raise ValueError('Adding Suggestion Failed')
+
+

@@ -7,9 +7,10 @@ import ssl
 import traceback
 from email.message import EmailMessage
 import settings
+from datetime import date
 
 """TODO:
-   reszing issues, max number of emails done!
+   reszing issues, max number of emails --> keep track of messages --> once get ten or more make message on front page saying brokem, add another column called msg for stack straxe and another called down , have a page with all the events packs included done!
 """
 
 app = Flask(__name__)
@@ -39,6 +40,7 @@ def generate_event():
             "description", "no description available")
         category = chosen_event.get("eventType", "no category")
         roll_needed = chosen_event.get("rollNeeded", "null")
+        print(event)
         return render_template('home.html', event=event, description=description, category=category,
                                rollNeeded=roll_needed)
     except:
@@ -66,9 +68,34 @@ def get_suggestion():
     except:
         return 'Bad'
 
+# get user suggestion and insert into database
+
+
+@ app.route('/getEvents', methods=['GET'])
+def get_events():
+    try:
+        events = Db.get_all()
+        # change 0 to false and 1 to true
+        names = ['deadly', 'rollNeeded']
+        for event in events:
+            for name in names:
+                if (event[name]):
+                    event[name] = 'True'
+                else:
+                    event[name] = 'False'
+        return render_template('all.html', events=events)
+    except:
+        return 'Bad'
+
 
 @ app.errorhandler(500)
 def internal_error(err):
+    today = date.today()
+
+    # Month abbreviation, day and year
+    d4 = today.strftime("%b-%d-%Y")
+    print("d4 =", d4)
+
     email_message = 'Hi me, something went wrong, you should check it out: \n \n'
     email_message += traceback.format_exc()
     email_message += '\n \n Good luck :)'
