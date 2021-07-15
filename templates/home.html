@@ -34,9 +34,14 @@
     <div id="main">
         {#if event is generated, display it#}
         {% include 'displayEvents.html' %}
+        {#display message if generate fails for unknown reason#}
         {#generate button#}
         <div style="text-align: center">
             <div class="failure" id="generateFailure">Failure: Please Choose A Category In The Settings</div>
+            {% if failure %}
+            <div class="failure" style="display: block; margin-top: 15px" id="generatePageFailure">Generate failed:
+                Please  go back <a href='/'>home</a> and check your settings</div>
+            {%endif %}
             <button class="btn btn-1" onclick="generate();" type="button" title="Generate a random event">
                 <i class="fa fa-play-circle fa-2x" aria-hidden="true"></i>
                 Generate New Event

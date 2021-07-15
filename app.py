@@ -15,6 +15,7 @@ from email.message import EmailMessage
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
+app.config['SECRET_KEY'] = 'any secret string'
 
 choices = ''
 
@@ -27,7 +28,7 @@ def home():
 # choose and display random event
 @ app.route('/generate', methods=('GET', 'POST'))
 def generate_event():
-    print(choices)
+    print('CHOICES', choices)
     chosen_event = Db.choose_events(choices)
     print('!!!!!!!!!!!!!ADTER')
     # from list of matching events, randomly choose and display one
@@ -39,11 +40,10 @@ def generate_event():
             "description", "no description available")
         category = chosen_event.get("eventType", "no category")
         roll_needed = chosen_event.get("rollNeeded", "null")
+        return render_template('home.html', event=event, description=description, category=category,
+                               rollNeeded=roll_needed)
     except:
-        print('nah')
-
-    return render_template('home.html', event=event, description=description, category=category,
-                           rollNeeded=roll_needed)
+        return render_template('home.html', failure=True)
 
 
 # get user filters and update 'choices' variable
@@ -87,8 +87,8 @@ def send_email(error, message_body):
     try:
         port = 465  # For SSL
         smtp_server = "smtp.gmail.com"
-        
-
+        my_email = 'sims4events@gmail.com'
+        password = "Sims4Events!"
         msg = EmailMessage()
         msg['Subject'] = error
         msg['To'] = 'sims4events@gmail.com'

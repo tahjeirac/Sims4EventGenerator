@@ -13,7 +13,7 @@ background: #edf8fc;
 }
 
 #titleHeader {
-    background-image: url("sims_background.png");
+    background-image: url("../images/sims_background.png");
     text-align: center;
 }
 
@@ -85,8 +85,6 @@ font-family: 'Roboto Slab', serif;
     right: 20px;
     top: 160px;
 }
-
-
 
 
 /* change alert box */
@@ -180,6 +178,8 @@ font-family: 'Poppins', sans-serif;
 
 .btn:hover{
     background: #2980b9;
+    cursor: pointer;
+
 }
 
 .btn:active {
@@ -209,7 +209,6 @@ font-family: 'Poppins', sans-serif;
     background-color: #dff0d8;
     border-color: #d6e9c6;
     display: none;
-    /*z-index: 9999;*/
 }
 
 .failure {
@@ -217,7 +216,6 @@ font-family: 'Poppins', sans-serif;
     background-color: #f5928b;
     border-color: #f55a4e;
     display: none;
-    /*z-index: 9999;*/
 }
 
 #infoText {
@@ -261,6 +259,8 @@ font-family: 'Poppins', sans-serif;
 /* Add a hover effect if you want */
 .fab:hover {
   opacity: 1.0;
+  cursor: pointer;
+
 }
 
 
@@ -296,6 +296,21 @@ img {
     margin: 0
 }
 
+a{
+    color: #610b04;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #250401;
+    text-decoration: underline;
+    cursor: pointer;   
+}
+
+a:active {
+    color: 250401;
+  }
+/* Courtsey of  */
 .wave {
     animation-name: wave-animation;  /* Refers to the name of your @keyframes element below */
     animation-duration: 2.5s;        /* Change to speed up or slow down */
@@ -314,6 +329,5 @@ img {
      60% { transform: rotate( 0.0deg) }  /* Reset for the last half to pause */
     100% { transform: rotate( 0.0deg) }
   }
-  
   
   
