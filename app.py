@@ -2,17 +2,16 @@ import json
 from flask import Flask, render_template, request
 import random
 import Db
-import settings
 
 """TODO: Fix abs pos items to not overlap (setting buttons, footer,) 
-   add in error handling , fix suggestion failure/success, done!
+   add in error handling , fix suggestion failure/success, add error handling, done!
 """
 
 app = Flask(__name__)
-app.config["DEBUG"] = settings.DEBUG
-app.config['SECRET_KEY'] = settings.SECRET_KEY
+app.config["DEBUG"] = True
+app.config['SECRET_KEY'] = 'any secret string'
 
-choices = ""
+choices = ''
 
 
 @app.route('/', methods=('GET', 'POST'))
@@ -23,6 +22,7 @@ def home():
 # choose and display random event
 @app.route('/generate', methods=('GET', 'POST'))
 def generate_event():
+    print (choices);
     chosen_event = Db.choose_events(choices)
 
     # from list of matching events, randomly choose and display one
@@ -43,8 +43,8 @@ def generate_event():
 # get user filters and update 'choices' variable
 @app.route('/selection', methods=['POST'])
 def get_post_javascript_data():
-    global choices
     jsdata = request.form['javascript_data']
+    global choices 
     choices = json.loads(jsdata)
     return 'Ok'
 
@@ -55,7 +55,7 @@ def get_suggestion():
     jsdata = request.form['javascript_data']
     suggestion = json.loads(jsdata)
     Db.add_suggestion(suggestion)
-    return 0
+    return 'Ok'
 
 
 if __name__ == '__main__':
