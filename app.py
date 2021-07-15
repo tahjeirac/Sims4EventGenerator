@@ -1,4 +1,3 @@
-from flask import render_template
 import json
 from flask import Flask, render_template, request, abort
 import random
@@ -7,14 +6,15 @@ import smtplib
 import ssl
 import traceback
 from email.message import EmailMessage
-
+import settings
 
 """TODO:
    reszing issues, max number of emails done!
 """
 
 app = Flask(__name__)
-app.config["DEBUG"] = True
+app.config["DEBUG"] = settings.DEBUG
+app.config['SECRET_KEY'] = settings.SECRET_KEY
 
 choices = ''
 
@@ -87,6 +87,8 @@ def send_email(error, message_body):
     try:
         port = 465  # For SSL
         smtp_server = "smtp.gmail.com"
+        my_email = settings.my_email
+        password = settings.password
         msg = EmailMessage()
         msg['Subject'] = error
         msg['To'] = 'sims4events@gmail.com'
