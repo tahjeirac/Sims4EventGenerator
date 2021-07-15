@@ -45,7 +45,7 @@ def get_post_javascript_data():
     jsdata = request.form['javascript_data']
     global choices 
     choices = json.loads(jsdata)
-    return 'OK'
+    return 'Ok'
 
 
 # get user suggestion and insert into database
@@ -54,7 +54,7 @@ def get_suggestion():
     jsdata = request.form['javascript_data']
     suggestion = json.loads(jsdata)
     Db.add_suggestion(suggestion)
-    return 'OK'
+    return 'Ok'
 
 
 if __name__ == '__main__':

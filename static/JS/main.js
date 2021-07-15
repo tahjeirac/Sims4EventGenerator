@@ -8,12 +8,12 @@ const checkBoxes = document.getElementsByClassName("checkBox");
 function saveChoices(array) {
     array.forEach(function (checkBox) {
         localStorage.setItem(checkBox.id, checkBox.checked);
-
     })
 }
 
 //load checkbox last state and set
 function load() {
+    console.log('loaded');
     [].forEach.call(checkBoxes, function (checkBox) {
         let checked = JSON.parse(localStorage.getItem(checkBox.id));
         document.getElementById(checkBox.id).checked = checked;
@@ -26,6 +26,7 @@ function isChecked(array) {
     array.forEach(function (checkBox) {
         if (checkBox.checked === false) {
             notChecked += 1;
+            console.log(checkBox.id, 'not checked')
         }
     })
 
@@ -33,23 +34,21 @@ function isChecked(array) {
     if (notChecked === array.length) {
         return false;
     } else {
-        return true
+        return true;
     }
 }
 
 //make sure at least one category is checked
-function checkCategories() {
+async function checkCategories() {
+    console.log('array', categoryCheckBoxes);
     let category = isChecked(categoryCheckBoxes);
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    console.log(category, 'cat');
     //save choice if checkbox checked else display alert
     if (category) {
         saveChoices(categoryCheckBoxes);
-        $("#saveSuccess").fadeIn(300).delay(1000).fadeOut(400);
-        console.log('dddddsd');
         return true;
     } else {
-        $("#saveSuccess").fadeIn(300).delay(1000).fadeOut(400);
-        console.log('ficled');
+        // ERROR HANDLING
         return false;
     }
 }
@@ -124,14 +123,14 @@ function checkAll(id) {
 
 
 //save button functionality
-function save() {
+async function save() {
     //save user choice for packs included
-    saveChoices(packCheckBoxes)
+    saveChoices(packCheckBoxes);
 
     //see if at least one category has been checked and save if it has been
-    let saved = checkCategories();
-    let deathIncluded = document.getElementById('deaths')
-
+    let saved = await checkCategories();
+    let deathIncluded = document.getElementById('deaths');
+    console.log(saved);
     //set whether save is valid or not for generate button
     localStorage.setItem('saveValid', String(saved))
 
@@ -143,7 +142,7 @@ function save() {
         localStorage.setItem(deathIncluded.id, deathIncluded.checked);
     } else {
         console.log('bad');
-        $("#saveSuccess").fadeIn(300).delay(1000).fadeOut(400);
+        $("#saveFailure").fadeIn(300).delay(1000).fadeOut(400);
 
     }
 
