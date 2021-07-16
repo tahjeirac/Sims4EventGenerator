@@ -44,7 +44,6 @@ psycopg2==2.9.1
 Pygments==2.6.1
 pylint==2.5.3
 pyparsing==2.4.7
-pypiwin32==223
 pyrsistent==0.16.0
 python-dotenv==0.15.0
 requests==2.23.0
