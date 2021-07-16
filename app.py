@@ -22,7 +22,6 @@ choices = ''
 
 @app.route('/', methods=('GET', 'POST'))
 def home():
-    # Db.test()
     return render_template('home.html')
 
 
