@@ -10,7 +10,7 @@ import settings
 from datetime import date
 
 """TODO:
-   reszing issues, max number of emails --> keep track of messages --> once get ten or more make message on front page saying brokem, add another column called msg for stack straxe and another called down , have a page with all the events packs included done!
+   reszing issues, max number of emails --> keep track of messages -->packs included done!
 """
 
 app = Flask(__name__)
@@ -22,25 +22,22 @@ choices = ''
 
 @app.route('/', methods=('GET', 'POST'))
 def home():
+    # Db.test()
     return render_template('home.html')
 
 
 # choose and display random event
 @ app.route('/generate', methods=('GET', 'POST'))
 def generate_event():
-    print('CHOICES', choices)
-    chosen_event = Db.choose_events(choices)
-    print('!!!!!!!!!!!!!ADTER')
+    chosen_events = Db.choose_events(choices)
     # from list of matching events, randomly choose and display one
     try:
-        chosen_event = random.choice(chosen_event)
+        chosen_event = random.choice(chosen_events)
         # set events name, description, category, and whether the random number generator is needed
         event = chosen_event.get("event", "no event found")
-        description = chosen_event.get(
-            "description", "no description available")
-        category = chosen_event.get("eventType", "no category")
-        roll_needed = chosen_event.get("rollNeeded", "null")
-        print(event)
+        description = chosen_event.get("description", "no description available")
+        category = chosen_event.get("eventtype", "no category")
+        roll_needed = chosen_event.get("rollneeded", "null")
         return render_template('home.html', event=event, description=description, category=category,
                                rollNeeded=roll_needed)
     except:
@@ -60,7 +57,6 @@ def get_post_javascript_data():
 @ app.route('/suggest', methods=['POST'])
 def get_suggestion():
     try:
-        print('suggg')
         jsdata = request.form['javascript_data']
         suggestion = json.loads(jsdata)
         Db.add_suggestion(suggestion)
@@ -73,10 +69,11 @@ def get_suggestion():
 
 @ app.route('/getEvents', methods=['GET'])
 def get_events():
+    # retries thing
     try:
         events = Db.get_all()
         # change 0 to false and 1 to true
-        names = ['deadly', 'rollNeeded']
+        names = ['deadly', 'rollneeded']
         for event in events:
             for name in names:
                 if (event[name]):
