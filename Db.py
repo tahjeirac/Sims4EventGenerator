@@ -6,9 +6,10 @@ from os import X_OK
 import sqlite3
 
 import os
-from dotenv import load_dotenv
-load_dotenv()
-MY_ENV_VAR = os.getenv('DATABASE_URL')
+# from dotenv import load_dotenv
+# load_dotenv()
+
+MY_ENV_VAR = os.environ.get('DATABASE_URL')
 
 
 # print(os.environ['DATABASE_URL'])

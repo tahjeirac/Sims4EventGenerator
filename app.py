@@ -6,16 +6,16 @@ import smtplib
 import ssl
 import traceback
 from email.message import EmailMessage
-import settings
+# import settings
 from datetime import date
-
+import os
 """TODO:
    reszing issues, max number of emails --> keep track of messages -->packs included done!
 """
 
 app = Flask(__name__)
-app.config["DEBUG"] = settings.DEBUG
-app.config['SECRET_KEY'] = settings.SECRET_KEY
+app.config["DEBUG"] = os.environ.get('DEBUG')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 choices = ''
 
@@ -34,7 +34,8 @@ def generate_event():
         chosen_event = random.choice(chosen_events)
         # set events name, description, category, and whether the random number generator is needed
         event = chosen_event.get("event", "no event found")
-        description = chosen_event.get("description", "no description available")
+        description = chosen_event.get(
+            "description", "no description available")
         category = chosen_event.get("eventtype", "no category")
         roll_needed = chosen_event.get("rollneeded", "null")
         return render_template('home.html', event=event, description=description, category=category,
@@ -110,8 +111,8 @@ def send_email(error, message_body):
     try:
         port = 465  # For SSL
         smtp_server = "smtp.gmail.com"
-        my_email = settings.my_email
-        password = settings.password
+        my_email = os.environ.get('my_email')
+        password = os.environ.get('password')
         msg = EmailMessage()
         msg['Subject'] = error
         msg['To'] = 'sims4events@gmail.com'
