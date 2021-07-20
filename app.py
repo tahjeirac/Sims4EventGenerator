@@ -1,31 +1,49 @@
 import json
-from flask import Flask, render_template, request, abort
+from flask import Flask, render_template, request, redirect, url_for, abort
 import random
 import Db
 import smtplib
 import ssl
 import traceback
 from email.message import EmailMessage
-# import settings
 from datetime import date
 import os
 """TODO:
-   reszing issues, max number of emails --> keep track of messages -->packs included done!
+   reszing issues, max number of emails --> keep track of messages -->packs included, try multipul times done!
 """
-
+# first query fails
 app = Flask(__name__)
-app.config["DEBUG"] = os.environ.get('DEBUG')
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+is_prod = os.environ.get('IS_HEROKU', None)
+
+if is_prod:
+    app.config["DEBUG"] = os.environ.get('DEBUG')
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+    my_email = os.environ.get('my_email')
+    password = os.environ.get('password')
+else:
+    import settings
+    app.config["DEBUG"] = settings.DEBUG
+    app.config['SECRET_KEY'] = settings.SECRET_KEY
+    my_email = settings.my_email
+    password = settings.password
 
 choices = ''
 
 
 @app.route('/', methods=('GET', 'POST'))
 def home():
+    data = request.args.to_dict()
+    if data:
+        if 'genFailure' in data:
+            return render_template('home.html', showGenFail=True)
+        elif 'displayFailure' in data:
+            return render_template('home.html', showDisplayFail=True)
+
     return render_template('home.html')
 
-
 # choose and display random event
+
+
 @ app.route('/generate', methods=('GET', 'POST'))
 def generate_event():
     chosen_events = Db.choose_events(choices)
@@ -41,7 +59,7 @@ def generate_event():
         return render_template('home.html', event=event, description=description, category=category,
                                rollNeeded=roll_needed)
     except:
-        return render_template('home.html', failure=True)
+        return redirect(url_for('home', genFailure=True))
 
 
 # get user filters and update 'choices' variable
@@ -64,12 +82,9 @@ def get_suggestion():
     except:
         return 'Bad'
 
-# get user suggestion and insert into database
-
 
 @ app.route('/getEvents', methods=['GET'])
 def get_events():
-    # retries thing
     try:
         events = Db.get_all()
         # change 0 to false and 1 to true
@@ -80,19 +95,13 @@ def get_events():
                     event[name] = 'True'
                 else:
                     event[name] = 'False'
-        return render_template('all.html', events=events)
+        return render_template('displayAll.html', events=events)
     except:
-        return 'Bad'
+        return redirect(url_for('home', displayFailure=True))
 
 
 @ app.errorhandler(500)
 def internal_error(err):
-    today = date.today()
-
-    # Month abbreviation, day and year
-    d4 = today.strftime("%b-%d-%Y")
-    print("d4 =", d4)
-
     email_message = 'Hi me, something went wrong, you should check it out: \n \n'
     email_message += traceback.format_exc()
     email_message += '\n \n Good luck :)'
@@ -111,8 +120,7 @@ def send_email(error, message_body):
     try:
         port = 465  # For SSL
         smtp_server = "smtp.gmail.com"
-        my_email = os.environ.get('my_email')
-        password = os.environ.get('password')
+
         msg = EmailMessage()
         msg['Subject'] = error
         msg['To'] = 'sims4events@gmail.com'

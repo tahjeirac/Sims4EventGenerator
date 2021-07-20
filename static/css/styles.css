@@ -7,15 +7,95 @@
 
 
 body, html {
-background: #edf8fc;
+    background: #edf8fc;
+    margin: 0;
+    height: 100%;
+    min-height: 100%;
     font-size: 20px;
-    /*height: 100%;*/
 }
 
-#titleHeader {
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header,
+footer {
+  flex: none;
+}
+
+header {
     background-image: url("../images/sims_background.png");
     text-align: center;
 }
+
+/* Style the navigation bar */
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 2px;
+  }
+  
+  /* Navbar links */
+  .navbar a {
+    float: left;
+    text-align: center;
+    padding: 5px;
+    color: black;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+
+  
+  /* Current/active navbar link */
+  .active {
+    background-color: #04AA6D;
+  }
+  
+  /* Add responsiveness - will automatically display the navbar vertically instead of horizontally on screens less than 500 pixels */
+  @media screen and (max-width: 500px) {
+    .navbar a {
+      float: none;
+      display: block;
+    }
+  }
+
+footer{
+    display: flex;
+    min-height:5px; 
+    width: 100%;
+    margin-top:auto; 
+    align-items: center;
+    justify-content: center;
+    flex-flow: row wrap;
+}
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: auto;
+    flex-direction: column;
+
+}
+
+#eventContainer{
+    width: 100%;
+  }
+  
+#genBtnContainer {
+    width: auto;
+    min-height: 50px;
+
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+
+
+/* HEADER CONTENT */
 
 h1, h4 {
     font-family: 'Libre Baskerville', serif;
@@ -23,11 +103,11 @@ h1, h4 {
 
 h1.header{
     color:#21b96b;
-    background-color: #d2f1e1;
 }
 
 p {
-font-family: 'Roboto Slab', serif;
+    text-align: center;
+    font-family: 'Roboto Slab', serif;
     font-weight: 400;
 }
 
@@ -73,43 +153,7 @@ font-family: 'Roboto Slab', serif;
     letter-spacing: 0.15em;
 }
 
-#settingsBtn {
-    position: absolute;
-    right: 92px;
-    top: 160px;
-}
-
-
-#suggestBtn {
-    position: absolute;
-    right: 20px;
-    top: 160px;
-}
-
-
-/* change alert box */
-.container {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    position: relative;
-}
-
-.checkBoxContainer {
-    justify-content: space-evenly;
-}
-
-.events {
-    flex: 6 0 0;
-    justify-content: center;
-}
-
-.settings {
-    flex: 1 0 0;
-
-
-}
-
+/* MAIN CONTENT */
 #eventText {
     font-size: 1.2em;
     text-align: center;
@@ -153,7 +197,6 @@ font-family: 'Poppins', sans-serif;
     transition: all 0.3s;
     outline: none;
 }
-
 #randomBtn {
     margin: 10px !important;
     padding: 0px !important;
@@ -162,20 +205,18 @@ font-family: 'Poppins', sans-serif;
     font-size: 36px;
 }
 
+
 #randomNum {
-    height: 25px;
-    width: 80px;
+    width: 10%;
+    margin: 0 auto;
     background-color: white;
     outline: #111111 solid 1px;
-     display:flex;
     align-items:center;
- font-family: 'Noto Serif Jp', serif;
+    font-family: 'Noto Serif Jp', serif;
     font-size: 20px;
     font-weight: bold;
 
 }
-
-
 .btn:hover{
     background: #2980b9;
     cursor: pointer;
@@ -192,11 +233,11 @@ font-family: 'Poppins', sans-serif;
     vertical-align: -5px;
 }
 
-/*COLLAPSIBLE*/
-/* Style the button that is used to open and close the collapsible content */
-
-
-
+.flex-row {
+    align-items: center;
+    justify-content: center;
+    text-align: center
+}
 .break {
     flex-basis: 100%;
     height: 0;
@@ -204,12 +245,7 @@ font-family: 'Poppins', sans-serif;
 }
 
 
-.success {
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-    display: none;
-}
+/* failure message */
 
 .failure {
     color: #981208;
@@ -218,33 +254,15 @@ font-family: 'Poppins', sans-serif;
     display: none;
 }
 
-#infoText {
-    visibility: visible;
-    position: absolute;
-    bottom: 5%;
-}
-
-#infoBtn {
-     position: absolute;
-       right: 55px;
-    top: 160px;
-}
-
-#contactInfo{
-     position:absolute;
-   bottom:30px;
-    left:45%;
-
-}
-
-.flexRow{
-    display: flex;
-    justify-content: center;
-    flex-flow: row wrap;
-    align-items: center;
+.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    display: none;
 }
 
 
+/* FOOTER CONTENT */
 .fab{
     font-size: 30px;
   text-align: center;
@@ -256,13 +274,11 @@ font-family: 'Poppins', sans-serif;
 
 }
 
-/* Add a hover effect if you want */
 .fab:hover {
   opacity: 1.0;
   cursor: pointer;
 
 }
-
 
 .fa-linkedin-in{
         padding: 20%;
@@ -296,7 +312,7 @@ img {
     margin: 0
 }
 
-a{
+a {
     color: #610b04;
     text-decoration: underline;
 }
@@ -330,5 +346,4 @@ a:active {
      60% { transform: rotate( 0.0deg) }  /* Reset for the last half to pause */
     100% { transform: rotate( 0.0deg) }
   }
-  
   

@@ -66,6 +66,7 @@ function createDictionary() {
 async function sendChoices() {
     let dict = createDictionary();
     let json_dict = JSON.stringify(dict);
+    console.log(json_dict)
     //might need to add more in body + error handling
     $.post("/selection", {
         javascript_data: json_dict

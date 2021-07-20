@@ -27,9 +27,13 @@
 }
 
 /* Add padding and center-align text to the container */
-.container1 {
+.container {
   padding: 16px;
   text-align: center;
+}
+
+.container a {
+  float: none;
 }
 
 /* The Modal (background) */
